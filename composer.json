@@ -1,0 +1,27 @@
+{
+    "name": "pubvana/pages",
+    "description": "Static pages module for Pubvana CMS",
+    "type": "flightphp-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "pubvana",
+            "email": "cs@pubvana.net"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "enlivenapp/flight-school": "^0.2",
+        "enlivenapp/flight-shield": "^0.1",
+        "enlivenapp/migrations": "^0.1",
+        "flightphp/active-record": "^0.7"
+    },
+    "suggest": {
+        "pubvana/admin": "Admin UI for page management"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pubvana\\Pages\\": "src/"
+        }
+    }
+}
