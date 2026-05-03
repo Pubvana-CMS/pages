@@ -93,6 +93,34 @@ class Page extends \flight\ActiveRecord
     }
 
     /**
+     * Count pages by status.
+     */
+    public function countByStatus(string $status): int
+    {
+        $result = (new self($this->getDatabaseConnection()))
+            ->select('COUNT(*) as cnt')
+            ->eq('status', $status)
+            ->isNull('deleted_at')
+            ->find();
+
+        return (int) $result->cnt;
+    }
+
+    /**
+     * Recently updated pages.
+     *
+     * @return self[]
+     */
+    public function recentUpdated(int $limit = 5): array
+    {
+        return (new self($this->getDatabaseConnection()))
+            ->isNull('deleted_at')
+            ->order('updated_at DESC')
+            ->limit($limit)
+            ->findAll();
+    }
+
+    /**
      * Create a new page record.
      */
     public function createRecord(array $data): self

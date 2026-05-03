@@ -6,6 +6,9 @@ namespace Pubvana\Pages\Controllers;
 
 use Pubvana\Admin\Controllers\AdminController;
 
+/**
+ * Admin controller for page CRUD, versioning, and publishing.
+ */
 class PagesAdminController extends AdminController
 {
     /**
@@ -45,7 +48,7 @@ class PagesAdminController extends AdminController
         $post = $this->app->request()->data->getData();
         unset($post['_csrf_token']);
 
-        $slug = $this->slugify($post['slug'] ?? '' ?: $post['title'] ?? '');
+        $slug = $this->app->slugify($post['slug'] ?? '' ?: $post['title'] ?? '');
 
         if ($this->app->pages()->slugExists($slug)) {
             $this->app->redirect('/admin/pages/create');
@@ -148,18 +151,5 @@ class PagesAdminController extends AdminController
         $this->app->pages()->restoreVersion((int) $id, (int) $versionId, (int) $user->id);
 
         $this->app->redirect('/admin/pages/' . $id . '/edit');
-    }
-
-    /**
-     * Generate a URL-safe slug from a string.
-     */
-    private function slugify(string $text): string
-    {
-        $text = strtolower(trim($text));
-        $text = str_replace('&', 'and', $text);
-        $text = preg_replace('/[^a-z0-9\s-]/', '', $text);
-        $text = preg_replace('/[\s]+/', '-', $text);
-        $text = preg_replace('/-+/', '-', $text);
-        return trim($text, '-');
     }
 }

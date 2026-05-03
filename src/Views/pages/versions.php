@@ -35,7 +35,7 @@
                             <td>#<?= (int) $v->version_number ?></td>
                             <td><?= htmlspecialchars($v->title) ?></td>
                             <td>
-                                <span class="badge bg-<?= $v->status === 'published' ? 'success' : 'secondary' ?>">
+                                <span class="badge bg-<?= $v->status === 'published' ? 'success-lt' : 'secondary-lt' ?>">
                                     <?= htmlspecialchars($v->status) ?>
                                 </span>
                             </td>

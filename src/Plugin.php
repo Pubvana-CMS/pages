@@ -33,5 +33,60 @@ class Plugin implements PluginInterface
             'url'      => '/pages',
             'priority' => 10,
         ]);
+
+        $app->adext('page', 'dashboard.cards', 'pubvana.pages', [
+            'label'    => 'Pages',
+            'priority' => 10,
+            'callable' => function (array $context) use ($app): array {
+                $pages = $app->pages();
+
+                return [
+                    [
+                        'id'          => 'published-pages',
+                        'label'       => 'Published Pages',
+                        'value'       => $pages->countByStatus('published'),
+                        'icon'        => 'ti-file-text',
+                        'tone'        => 'success',
+                        'href'        => '/pages',
+                        'description' => 'Live pages currently available on the site.',
+                    ],
+                    [
+                        'id'          => 'draft-pages',
+                        'label'       => 'Draft Pages',
+                        'value'       => $pages->countByStatus('draft'),
+                        'icon'        => 'ti-edit',
+                        'tone'        => 'warning',
+                        'href'        => '/pages',
+                        'description' => 'Pages still waiting to be published.',
+                    ],
+                ];
+            },
+        ]);
+
+        $app->adext('page', 'dashboard.sections', 'pubvana.pages', [
+            'label'    => 'Pages',
+            'priority' => 20,
+            'callable' => function (array $context) use ($app): array {
+                $items = [];
+                foreach ($app->pages()->recentUpdated(5) as $page) {
+                    $items[] = [
+                        'label'    => $page->title,
+                        'meta'     => ucfirst((string) $page->status) . ' · Updated ' . date('M j, Y g:ia', strtotime((string) $page->updated_at)),
+                        'href'     => '/pages/' . (int) $page->id . '/edit',
+                        'emphasis' => $page->status === 'published' ? 'success' : 'secondary',
+                    ];
+                }
+
+                return [[
+                    'id'          => 'recent-pages',
+                    'title'       => 'Recently Updated Pages',
+                    'type'        => 'list',
+                    'icon'        => 'ti-files',
+                    'href'        => '/pages',
+                    'empty_state' => 'No pages have been updated yet.',
+                    'items'       => $items,
+                ]];
+            },
+        ]);
     }
 }

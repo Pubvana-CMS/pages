@@ -1,0 +1,10 @@
+{
+    "display_name": "Pages",
+    "description": "Static pages module for Pubvana CMS",
+    "category": "content",
+    "provides": {
+        "content_types": [],
+        "content_type_supports": [],
+        "blocks": []
+    }
+}

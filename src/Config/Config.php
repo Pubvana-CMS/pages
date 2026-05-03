@@ -6,8 +6,7 @@
  * @license   MIT
  */
 
-$routePrepend = 'pages';
-
 return [
+    'routePrepend'  => 'pages',
     'max_revisions' => 15,
 ];

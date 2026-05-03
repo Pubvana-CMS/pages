@@ -6,21 +6,18 @@ namespace Pubvana\Pages\Services;
 
 use Pubvana\Pages\Models\Page;
 use Pubvana\Pages\Models\PageVersion;
-use Pubvana\Pages\Models\PageView;
 use Flight;
 
 class PagesService
 {
     private Page $model;
     private PageVersion $versionModel;
-    private PageView $viewModel;
     private array $config;
 
     public function __construct(\PDO $pdo, array $config = [])
     {
         $this->model        = new Page($pdo);
         $this->versionModel = new PageVersion($pdo);
-        $this->viewModel    = new PageView($pdo);
         $this->config       = $config;
     }
 
@@ -59,6 +56,38 @@ class PagesService
     public function slugExists(string $slug, ?int $excludeId = null): bool
     {
         return $this->model->slugExists($slug, $excludeId);
+    }
+
+    /**
+     * Get all published pages (for pickers/dropdowns).
+     *
+     * @return Page[]
+     */
+    public function listPublished(): array
+    {
+        return (new Page($this->model->getDatabaseConnection()))
+            ->eq('status', 'published')
+            ->isNull('deleted_at')
+            ->order('title ASC')
+            ->findAll();
+    }
+
+    /**
+     * Count pages by status.
+     */
+    public function countByStatus(string $status): int
+    {
+        return $this->model->countByStatus($status);
+    }
+
+    /**
+     * Recently updated pages.
+     *
+     * @return Page[]
+     */
+    public function recentUpdated(int $limit = 5): array
+    {
+        return $this->model->recentUpdated($limit);
     }
 
     /**
@@ -157,22 +186,6 @@ class PagesService
         $this->pruneVersions($pageId);
 
         return $page;
-    }
-
-    /**
-     * Record a page view.
-     */
-    public function recordView(int $pageId, ?string $referrerDomain = null): void
-    {
-        $this->viewModel->record($pageId, $referrerDomain);
-    }
-
-    /**
-     * Get view count for a page.
-     */
-    public function getViewCount(int $pageId): int
-    {
-        return $this->viewModel->countForPage($pageId);
     }
 
     /**

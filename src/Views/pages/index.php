@@ -43,12 +43,12 @@
                             </td>
                             <td><code><?= htmlspecialchars($p->slug) ?></code></td>
                             <td>
-                                <span class="badge bg-<?= $p->status === 'published' ? 'success' : 'secondary' ?>">
+                                <span class="badge bg-<?= $p->status === 'published' ? 'success-lt' : 'secondary-lt' ?>">
                                     <?= htmlspecialchars($p->status) ?>
                                 </span>
                             </td>
                             <td>
-                                <?= (int) $p->is_system ? '<span class="badge bg-info">System</span>' : '—' ?>
+                                <?= (int) $p->is_system ? '<span class="badge bg-info-lt">System</span>' : '—' ?>
                             </td>
                             <td>
                                 <div class="btn-list flex-nowrap">

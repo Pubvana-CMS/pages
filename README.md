@@ -1,10 +1,18 @@
-[![Version](http://poser.pugx.org/pubvana/pages/version)](https://packagist.org/packages/pubvana/pages)
-[![License](http://poser.pugx.org/pubvana/pages/license)](https://packagist.org/packages/pubvana/pages)
-[![PHP Version Require](http://poser.pugx.org/pubvana/pages/require/php)](https://packagist.org/packages/pubvana/pages)
+[![Stable? Not Quite Yet](https://img.shields.io/badge/stable%3F-not%20quite%20yet-blue?style=for-the-badge)](https://packagist.org/packages/pubvana/pages)
+[![License](https://img.shields.io/packagist/l/pubvana/pages?style=for-the-badge)](https://packagist.org/packages/pubvana/pages)
+[![PHP Version](https://img.shields.io/packagist/php-v/pubvana/pages?style=for-the-badge)](https://packagist.org/packages/pubvana/pages)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/pubvana/pages?style=for-the-badge)](https://packagist.org/packages/pubvana/pages)
+[![Total Downloads](https://img.shields.io/packagist/dt/pubvana/pages?style=for-the-badge)](https://packagist.org/packages/pubvana/pages)
+[![GitHub Issues](https://img.shields.io/github/issues/Pubvana-CMS/pages?style=for-the-badge)](https://github.com/Pubvana-CMS/pages/issues)
+[![Contributors](https://img.shields.io/github/contributors/Pubvana-CMS/pages?style=for-the-badge)](https://github.com/Pubvana-CMS/pages/graphs/contributors)
+[![Latest Release](https://img.shields.io/github/v/release/Pubvana-CMS/pages?style=for-the-badge)](https://github.com/Pubvana-CMS/pages/releases)
+[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-blue?style=for-the-badge)](https://github.com/Pubvana-CMS/pages/pulls)
 
 # Pubvana Pages
 
-Static pages module for [Pubvana](https://pubvanacms.com) — CRUD for standalone pages with slug-based routing, version history, and view tracking. Built as a [Flight School](https://github.com/enlivenapp/flight-school) plugin with the headless service pattern.
+**I noticed folks downloading some of these packages. I'm super grateful, Thank You!  I would like to let folks know until this notice disappears I'm doing a lot of breaking changes without worrying about them.  Once versions are up around 0.5.x things should settle down.**
+
+Static pages module for [Pubvana](https://pubvanacms.com) — CRUD for standalone pages with slug-based routing, version history, and view tracking. Built as a [Flight School](https://github.com/enlivenapp/flight-school) plugin.
 
 ## Features
 
@@ -13,7 +21,7 @@ Static pages module for [Pubvana](https://pubvanacms.com) — CRUD for standalon
 - Page view tracking with referrer domain
 - HTML sanitization via HTMLPurifier on save (bypass per-save via admin checkbox)
 - System page protection (cannot be deleted)
-- Headless service on `$app->pages()` — usable from any controller or plugin
+- Page service on `$app->pages()` — usable from any controller or plugin
 - Registers an `adext` menu contribution when admin is present
 
 ## Requirements
@@ -27,7 +35,7 @@ Static pages module for [Pubvana](https://pubvanacms.com) — CRUD for standalon
 
 ## Recommends
 
-- `pubvana/admin` (The head for Pubvana headless)
+- `pubvana/admin` (Admin UI for page management)
 
 ## Installation
 
@@ -47,6 +55,10 @@ Enable in `app/config/config.php`:
 ```
 
 Migrations package creates the `pages`, `page_versions`, and `page_views` tables automatically on first load.
+
+## Flight School config
+
+This package uses Flight School's return-array config format. `src/Config/Config.php` returns the package defaults as an array, Flight School stores that array under `pubvana.pages` on `$app`, and the current public route prefix is defined there with `'routePrepend' => 'pages'`.
 
 ## Configuration
 
